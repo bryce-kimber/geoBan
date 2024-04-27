@@ -14,6 +14,7 @@ https://github.com/bryce-kimber/geoBan.git
 
 Ensure you have Python installed (version 3.7 or higher recommended) along with the required libraries. You can install the dependencies using pip:
 
+pip install -r requirements.txt
 
 ## Usage
 
@@ -21,6 +22,7 @@ Ensure you have Python installed (version 3.7 or higher recommended) along with 
 
 Use the following command to execute the main script:
 
+python geoBan.py
 
 ## Components
 
