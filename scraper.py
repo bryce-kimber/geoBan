@@ -6,6 +6,7 @@ from selenium.webdriver.firefox.service import Service as FirefoxService
 from bs4 import BeautifulSoup
 import os
 
+
 def scrape(name, url):
     # Set up the webdriver options
     options = webdriver.FirefoxOptions()
