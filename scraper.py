@@ -10,7 +10,7 @@ import os
 def scrape(name, url):
     # Set up the webdriver options
     options = webdriver.FirefoxOptions()
-    options.headless = True
+    options.add_argument("--headless")
 
     # Set up the webdriver with the options
     driver = webdriver.Firefox(service=FirefoxService(GeckoDriverManager().install()), options=options)
