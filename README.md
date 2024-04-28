@@ -36,6 +36,29 @@ python geoBan.py
   
 - **`ban.py`:** Identifies the largest possible IP ranges given the start and end IP addresses from the scraped data.
 
+## For servers with CLI only:
+
+I have only tested the CLI functionality on Ubuntu server. If you already have firefox installed via apt, there seems to be an issue in the binary installed when using apt/snap. Follow the following steps to install the firefox binary directly from mozilla. Make sure to get the latest version.
+
+`Uninstall firefox:`
+
+- sudo apt remove firefox
+
+`Install firefox package:`
+
+- wget https://ftp.mozilla.org/pub/firefox/releases/125.0.2/linux-x86_64/en-US/firefox-125.0.2.tar.bz2
+
+- tar -xf firefox-116.0.3.tar.bz2 --directory /opt/
+
+- ln -s /opt/firefox/firefox /usr/bin/firefox
+
+`Install the required libraries for selenium to be able to interact headless with firefox:`
+
+- sudo apt install libgtk-3-0, libasound2t64
+
+- export LD_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu/:$LD_LIBRARY_PATH
+
+
 ## Libraries Used
 
 - `pandas`: For data manipulation and handling.
