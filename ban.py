@@ -1,6 +1,6 @@
 import csv
 import math
-
+import os
 
 def ip_to_int(ip):
 
@@ -65,9 +65,9 @@ def read_csv_and_generate_ip_ranges(filename):
     return ip_ranges
 
 
-def calculateBanRanges(country_file, name):
-    filename = f'{country_file}'  # Replace with your CSV file name
-    outputfile = f'{name}_ranges_to_block.csv'
+def calculateBanRanges(country_file, name, country_output_folder):
+    filename = os.path.join(country_output_folder, f'{country_file}')  # Replace with your CSV file name
+    outputfile = os.path.join(country_output_folder, f'{name}_ranges_to_block.csv')
     ip_ranges = read_csv_and_generate_ip_ranges(filename)
 
     # Write the list to a CSV file

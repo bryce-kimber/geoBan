@@ -23,16 +23,16 @@ def search(list1, list2):  # Looks for duplicates between the two files
 def write_matches_to_csv(output_file, duplicate_entries):  # Writes matches to csv
     with open(f'{output_file}', 'w', newline='') as csvfile:
         writer = csv.writer(csvfile)
-        writer.writerow(['Duplicate Entry'])  # Write header
+        writer.writerow(['Blocklist Matches'])  # Write header
         for entry in duplicate_entries:
             writer.writerow(entry)
 
 
-def findMatches(country):
+def findMatches(country, country_output_folder):
     # Specify the filenames for the CSV files
-    filename1 = f'{country}_All_Subnet_Masks.csv'
+    filename1 = os.path.join(country_output_folder, f'{country}_All_Subnet_Masks.csv')
     config_file = 'config.json'
-    output_file = f'{country}_Blocked_Matches.csv'
+    output_file = os.path.join(country_output_folder, f'{country}_Blocked_Matches.csv')
 
     # Check if the configuration file exists
     if os.path.isfile(config_file):

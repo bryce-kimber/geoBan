@@ -1,6 +1,6 @@
 import csv
 import ipaddress
-
+import os
 
 def calculate_all_possible_subnets(start_ip, end_ip):
 
@@ -81,7 +81,7 @@ def write_ip_ranges_to_csv(ip_ranges, output_filename):
             writer.writerow([ip_range])
 
 
-def getRange(country_file, country):
+def getRange(country_file, country, country_output_folder):
 
     """
        Generates and writes subnet masks for IP ranges from a CSV file.
@@ -94,8 +94,8 @@ def getRange(country_file, country):
            None
        """
 
-    input_filename = f'{country_file}'
-    output_filename = f'{country}_All_Subnet_Masks.csv'
+    input_filename = os.path.join(country_output_folder, f'{country_file}')
+    output_filename = os.path.join(country_output_folder, f'{country}_All_Subnet_Masks.csv')
     ip_ranges = read_csv_and_generate_ip_ranges(input_filename)
     write_ip_ranges_to_csv(ip_ranges, output_filename)
     print(f"All possible IP ranges with their subnet masks have been written to {output_filename}")

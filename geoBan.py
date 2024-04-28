@@ -3,6 +3,8 @@ import ranges as ranges
 import duplicates as du
 import cleanup as clean
 import ban
+import os
+import pyfiglet
 
 #  main user input options
 EXIT = 'EXIT'
@@ -100,36 +102,49 @@ def sub_menu4(menu, option):
 
 def process_country(country):
     name, url = country
-    country_file = scraper.scrape(name, url)  # scrape site to get country data
+    country_file, country_output_folder = scraper.scrape(name, url)  # scrape site to get country data
     print("Storing table of IPs in " + country_file)
-    ranges.getRange(country_file, name)  # get all possible IP ranges based on scraped data
-    du.findMatches(name)  # compare user block list to country IP ranges
-    cleanup_files(country_file, name)  # prompt user to delete tmp files
+    ranges.getRange(country_file, name, country_output_folder)  # get all possible IP ranges based on scraped data
+    du.findMatches(name, country_output_folder)  # compare user block list to country IP ranges
+    cleanup_files(country_file, name, country_output_folder)  # prompt user to delete tmp files
     continue_or_exit()
 
 
 def process_country_for_ban(country):
     name, url = country
-    country_file = scraper.scrape(name, url)  # scrape site to get country data
+    country_file, country_output_folder = scraper.scrape(name, url)  # scrape site to get country data
     print("Saving scraped data to " + f"{country_file}")
-    ban.calculateBanRanges(country_file, name)  # calculate the largest possible CIDR ranges
-    cleanup_files(country_file, name)  # prompt user to delete tmp files
+    ban.calculateBanRanges(country_file, name, country_output_folder)  # calculate the largest possible CIDR ranges
+    cleanup_files(country_file, name, country_output_folder)  # prompt user to delete tmp files
     continue_or_exit()
 
 
-def cleanup_files(country_file, name):
+def cleanup_files(country_file, name, country_output_folder):
     while True:
-        cleanup = get_user_input(
-            f"Do you want to delete the files {country_file} and {name}_ALL_Subnet_Masks.csv? This will not delete the "
-            f"results file {name}_Blocked_Matches.csv. Please answer 'yes' or 'no' ",
-            [YES, NO])
-        if cleanup == YES:  # delete tmp files
-            print("Cleaning up...")
-            clean.cleanup(country_file, name)
-            break
-        elif cleanup == NO:  # keep tmp files
-            print("Very well...")
-            break
+        if os.path.isfile(os.path.join(country_output_folder,f'{name}_Blocked_Matches.csv')):
+            cleanup = get_user_input(
+                f"Do you want to delete the files {country_file} and {name}_ALL_Subnet_Masks.csv? This will not delete the "
+                f"results file {name}_Blocked_Matches.csv. Please answer 'yes' or 'no': ",
+                [YES, NO])
+            if cleanup == YES:  # delete tmp files
+                print("Cleaning up...")
+                clean.cleanupBlocklistCheck(country_file, name, country_output_folder)
+                break
+            elif cleanup == NO:  # keep tmp files
+                print("Very well...")
+                break
+        else:
+            cleanup = get_user_input(
+                f"Do you want to delete the file {country_file}? This will not delete the "
+                f"results file {name}_ranges_to_block.csv. Please answer 'yes' or 'no': ",
+                [YES, NO])
+            if cleanup == YES:  # delete tmp files
+                print("Cleaning up...")
+                clean.cleanupBanlistCheck(country_file, country_output_folder)
+                break
+            elif cleanup == NO:  # keep tmp files
+                print("Very well...")
+                break
 
 
 def continue_or_exit():
@@ -397,4 +412,6 @@ def main():
 
 
 if __name__ == "__main__":
+    ascii_banner = pyfiglet.figlet_format("geoBan")
+    print(ascii_banner)
     main()
