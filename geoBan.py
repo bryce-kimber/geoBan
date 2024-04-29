@@ -447,7 +447,6 @@ def main():
             'https://lite.ip2location.com/zambia-ip-address-ranges',
             'https://lite.ip2location.com/zimbabwe-ip-address-ranges']
 
-
     # create menu
     menu = {}
     for name, url in zip(names, urls):
