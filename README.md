@@ -40,10 +40,6 @@ python geoBan.py
 
 I have only tested the CLI functionality on Ubuntu server. If you already have firefox installed via apt, there seems to be an issue in the binary installed when using apt/snap. Follow the following steps to install the firefox binary directly from mozilla. Make sure to get the latest version.
 
-`Uninstall firefox:`
-
-- sudo apt remove firefox
-
 `Install firefox package:`
 
 - wget https://ftp.mozilla.org/pub/firefox/releases/125.0.2/linux-x86_64/en-US/firefox-125.0.2.tar.bz2
